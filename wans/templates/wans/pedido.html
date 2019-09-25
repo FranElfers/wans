@@ -1,0 +1,40 @@
+{% extends 'wans/nav_base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/pedido.css' %}">
+<script>
+$(document).ready(function(){
+	$("#2").hide();
+})
+
+var transicion = function(a,b){
+	var first = '#' + a;
+	var second = '#' + b;
+	$(first).fadeOut();
+	$(second).delay(500).fadeIn();
+}
+</script>
+<form method="POST">
+	{% csrf_token %}
+	<section>
+		<div id="1">
+			<h1>Primera pagina</h1>
+			<div class="pag">
+				<div style="background: yellow"></div>
+				<div></div>
+				<div></div>
+			</div>
+			<div class="pregunta">
+				<p>Que problema tenés maestro?</p>
+				{{ form.presentacion }}
+			</div>
+			<div class="pregunta">
+				<p>Donde hacés de ocupa?</p>
+				{{ form.ubicacion }}
+			</div>
+		</div>
+		<button type="submit">Subir</button>
+	</section>
+</form>
+{% endblock %}

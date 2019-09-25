@@ -1,0 +1,21 @@
+{% extends 'wans/nav_base.html' %}
+{% load static %}
+{% block content %}
+<div class="contenedor">
+    <link rel="stylesheet" type="text/css" href="../../static/css/login.css">
+    <h1>Ingresá</h1>
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <span>{{ form.username.label_tag }}</span>
+        <span>{{ form.username }}</span>
+        <br>
+        <span>{{ form.password.label_tag }}</span>
+        <span>{{ form.password }}</span>
+        {% if form.errors %}
+            <span>Tu nombre y contraseña no coinciden, por favor vuelve a intentar.</span>
+        {% endif %}
+        <input class="iniciar" type="submit" value="login" />
+        <a class="iniciar" href="{% url 'inicio' %}">Volver</a>
+    </form>
+</div>
+{% endblock %}

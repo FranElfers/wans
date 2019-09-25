@@ -1,0 +1,87 @@
+body {
+	margin: 0;
+	background: url('/static/images/login.png');
+}
+nav {
+	float: right;
+	display: inline;
+	padding: 5px 20px;
+	background: #659bff;
+	border-radius: 0 0 0 30px;
+}
+
+nav a, nav b {
+	display: inline-block;
+	vertical-align: middle;
+	color: #FFF;
+	text-decoration: none;
+	font-family: Montserrat;
+}
+
+nav img {
+	max-height: 40px;
+	border-radius: 50%;
+}
+
+nav a:not(.profile), nav b {
+	margin-right: 15px;
+	transition: margin-top .5s;
+}
+
+nav a:not(.profile):hover {
+	margin-top: 18px;
+}
+
+.logo {
+	font-size: 6em;
+	font-family: Raleway;
+	color: #FFF;
+}
+
+.centro {
+	width: 912px;
+	margin: 5% auto;
+}
+
+.left {
+    width: 470px;
+	float: left;
+}
+
+.left a, .left p {
+	float: right;
+	margin: 0;
+	font-family: Montserrat;
+}
+
+.left p {
+	text-align: right;
+	max-width: 530px;
+	font-size: 2.5em;
+	margin-top: 70px;
+	margin-bottom: 30px;
+}
+
+.left a {
+	font-size: 2em;
+	color: #FFF;
+	text-decoration: none;
+	background: #659bff;
+	padding: 15px;
+	border-radius: 15px;
+	box-shadow: 5px 8px 12px #888;
+
+}
+
+.centro img {
+	margin-left: 50px;
+}
+
+/* TABLA */
+
+table {
+	margin: 4% auto;
+	background: white;
+	padding: 3px;
+	width: 60%;
+}

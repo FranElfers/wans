@@ -1,0 +1,87 @@
+body {
+	background: url('../images/login.png');
+}
+
+.contenedor {
+	background: white;
+	padding: 10px;
+	margin: 0 auto;
+	width: 400px;
+	border-radius: 15px;
+	box-shadow: 4px 4px 10px #888888;
+}
+
+h1 {
+	text-align: center;
+	font-family: Montserrat;
+	font-size: 60px;
+	color: #3a3a3a;
+}
+
+span input {
+	padding: 5px;
+	width: 300px;
+	font-size: 1.3em;
+	margin-top: 4px;
+	border: none;
+	border-radius: 5px;
+	background: lightgrey;
+}
+
+span {margin-left: 40px;}
+span, span input{
+	font-family: Arial;
+	display: block;
+	outline: none;
+}
+
+.iniciar {
+    display: inline-block;
+	font-family: Arial;
+	padding: 6px;
+	margin: 50px 20px 20px;
+	border: none;
+	border-radius: 5px;
+	outline: none;
+	transition-duration: 0.4s;
+}
+
+input.iniciar {
+    float: right;
+	background: #5EE467;
+}
+
+a.iniciar {
+	text-decoration: none;
+	font-weight: 700;
+}
+
+.iniciar:hover {
+	transform: translate(0,-7px);
+}
+.circle {
+	background: white;
+	margin: 100px auto 0;
+	width: 300px;
+	height: 150px;
+	border-radius: 600px 600px 0 0;
+	border: 1px;
+}
+.cabeza, .cuerpo {
+	background: lightgrey;
+}
+.cabeza {
+	margin: 0 auto 0;
+	height: 50px;
+	width: 50px;
+	border-radius: 50%;
+}
+.cuerpo {
+	margin: 20px auto 0;
+	height: 100px;
+	width: 150px;
+	border-radius: 50% 50% 0 0;
+}
+.espacio {
+	height: 20px;
+}

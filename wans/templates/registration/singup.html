@@ -1,0 +1,23 @@
+{% extends 'registration/login_base.html' %}
+{% block content %}
+<div class="contenedor">
+    <link rel="stylesheet" type="text/css" href="../../static/css/login.css">
+    <h1>Regístrate</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <span>{{ form.username.label_tag }}</span>
+        <span>{{ form.username }}</span>
+        <br>
+        <span>{{ form.password1.label_tag }}</span>
+        <span>{{ form.password1 }}</span>
+        <br>
+        <span>{{ form.password2.label_tag }}</span>
+        <span>{{ form.password2 }}</span>
+        {% if form.errors %}
+            <span>Error</span>
+        {% endif %}
+        <input class="iniciar" type="submit" value="signup"/>
+        <a class="iniciar" href="{% url 'inicio' %}">Volver</a>
+    </form>
+</div>
+{% endblock %}
