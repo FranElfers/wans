@@ -12,21 +12,24 @@
 <body>
 
 	<nav>
-		<b>{{ user.username }}</b>
-		<a href="{% url 'inicio' %}">Inicio</a>
-		<a href="#">¿Buscas trabajo?</a>
+		<ul>
+			<li class="user"><b>{{ user.username }}</b></li>
+			<li><a href="{% url 'inicio' %}">Inicio</a></li>
+			<li><a href="#">¿Buscas trabajo?</a></li>
 
-		{% if user.is_authenticated %}
-		<a href="{% url 'trabajos' %}">Lista</a>
-		<a href="{% url 'logout' %}">Log out</a>
-		{% else %}
-		<a href="{% url 'login' %}" class="top-menu">Log in</a>
-		<a href="{% url 'signup' %}" class="top-menu">Signup</a>
-		{% endif %}
-
-		<a href="{% url 'perfil' %}" class="profile">
-			<img src="{% static 'images/foto.jpg' %}">
-		</a>
+			{% if user.is_authenticated %}
+			<li><a href="{% url 'trabajos' %}">Lista</a></li>
+			<li><a href="{% url 'logout' %}">Log out</a></li>
+			{% else %}
+			<li><a href="{% url 'login' %}">Log in</a></li>
+			<li><a href="{% url 'signup' %}">Signup</a></li>
+			{% endif %}
+			<li class="profile">
+				<a class="profile-link" href="{% url 'perfil' %}">
+					<img src="{% static 'images/foto.jpg' %}">
+				</a>
+			</li>
+		</ul>
 	</nav>
 	<span class="logo">WANS</span>
     {% block content %}

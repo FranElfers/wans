@@ -2,35 +2,6 @@ body {
 	margin: 0;
 	background: url('/static/images/login.png');
 }
-nav {
-	float: right;
-	display: inline;
-	padding: 5px 20px;
-	background: #659bff;
-	border-radius: 0 0 0 30px;
-}
-
-nav a, nav b {
-	display: inline-block;
-	vertical-align: middle;
-	color: #FFF;
-	text-decoration: none;
-	font-family: Montserrat;
-}
-
-nav img {
-	max-height: 40px;
-	border-radius: 50%;
-}
-
-nav a:not(.profile), nav b {
-	margin-right: 15px;
-	transition: margin-top .5s;
-}
-
-nav a:not(.profile):hover {
-	margin-top: 18px;
-}
 
 .logo {
 	font-size: 6em;
@@ -84,4 +55,47 @@ table {
 	background: white;
 	padding: 3px;
 	width: 60%;
+}
+
+/* NAV BAR */
+
+nav {
+	float: right;
+	background: #659bff;
+	border-radius: 0 0 0 30px;
+}
+
+nav ul {
+    list-style-type: none;
+	margin: 0;
+}
+
+nav li {
+    float:left;
+    text-align: center;
+    transition: background .5s;
+}
+
+nav li:not(.profile):not(.user):hover {
+	background: #4c8bff;
+}
+
+
+nav a:not(.profile-link), nav b {
+	display:block;
+	padding: 15px 8px;
+	color: #fff;
+	text-decoration: none;
+	font-family: Montserrat;
+}
+
+
+
+nav img {
+	max-height: 40px;
+	border-radius: 50%;
+}
+
+.profile a {
+	padding: 10px;
 }
