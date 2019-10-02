@@ -1,0 +1,7 @@
+{% extends 'wans/nav_base.html' %}
+{% load static %}
+{% block content %}
+<p>Nombre de usuario: {{ user.username }}</p>
+<p>Nombre: {{ user.cliente.nombre }}</p>
+<p>DNI: {{ user.cliente.dni }}</p>
+{% endblock %}

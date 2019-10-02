@@ -5,15 +5,21 @@
     <h1>Regístrate</h1>
     <form method="POST">
         {% csrf_token %}
-        <span>{{ form.username.label_tag }}</span>
-        <span>{{ form.username }}</span>
+        <span>{{ user_form.username.label_tag }}</span>
+        <span>{{ user_form.username }}</span>
         <br>
-        <span>{{ form.password1.label_tag }}</span>
-        <span>{{ form.password1 }}</span>
+        <span>Nombre real</span>
+        <span>{{ cliente_form.nombre }}</span>
         <br>
-        <span>{{ form.password2.label_tag }}</span>
-        <span>{{ form.password2 }}</span>
-        {% if form.errors %}
+        <span>DNI</span>
+        <span>{{ cliente_form.dni }}</span>
+        <br>
+        <span>{{ user_form.password1.label_tag }}</span>
+        <span>{{ user_form.password1 }}</span>
+        <br>
+        <span>{{ user_form.password2.label_tag }}</span>
+        <span>{{ user_form.password2 }}</span>
+        {% if user_form.errors or cliente_form.errors %}
             <span>Error</span>
         {% endif %}
         <input class="iniciar" type="submit" value="signup"/>
