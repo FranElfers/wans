@@ -1,7 +1,7 @@
 {% extends 'registration/login_base.html' %}
+{% load static %}
 {% block content %}
 <div class="contenedor">
-    <link rel="stylesheet" type="text/css" href="../../static/css/login.css">
     <h1>Regístrate</h1>
     <form method="POST">
         {% csrf_token %}
