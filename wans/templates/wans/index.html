@@ -4,7 +4,7 @@
 <div class="centro">
 	<div class="left">
 		<p>Servicio tecnico en computacion al instante!</p><br>
-		<a href="{% url 'new_pedido' %}">Solicitar servicio</a>
+		<a href="{% if user.is_authenticated %}{% url 'new_pedido' %}{% else %}{% url 'login' %}{% endif %}">Solicitar servicio</a>
 	</div>
 	<img src="{% static 'images/tecnico.png' %}	">
 </div>

@@ -9,14 +9,14 @@ class Cliente(models.Model):
     dni = models.IntegerField(null=True)
 
     def __str__(self):
-        return self.nombre
+        return self.usuario.username
 
 
 class Pedido(models.Model):
-    cliente = models.ForeignKey('Cliente', on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     presentacion = models.CharField(max_length=100)
     ubicacion = models.CharField(max_length=100)
     dificultad = models.CharField(max_length=6)
 
     def __str__(self):
-        return self.cliente
+        return self.ubicacion

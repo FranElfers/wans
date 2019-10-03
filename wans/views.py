@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 from django.contrib.auth.models import User
 from .forms import PedidoForm, ClienteForm
+from django.shortcuts import get_object_or_404
 
 
 # Create your views here.
@@ -16,14 +17,14 @@ def trabajos(request):
     return render(request, 'wans/lista.html', {'pedidos': pedidos})
 
 
-@login_required
 def new_pedido(request):
+    # user = get_object_or_404(User, pk=user_id)
     if request.method == "POST":
         form = PedidoForm(request.POST)
         if form.is_valid():
             pedido = form.save(commit=False)
-            pedido.cliente = request.user
             pedido.dificultad = '***'
+            pedido.usuario = request.user
             pedido.save()
             return redirect('inicio')
     else:
@@ -31,7 +32,6 @@ def new_pedido(request):
     return render(request, 'wans/pedido.html', {'form': form})
 
 
-@login_required
 def perfil(request):
     return render(request, 'wans/perfil.html', {})
 
