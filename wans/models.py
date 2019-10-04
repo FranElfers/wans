@@ -13,7 +13,7 @@ class Cliente(models.Model):
 
 
 class Pedido(models.Model):
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    usuario = models.ForeignKey("auth.User", on_delete=models.CASCADE, null=True)
     presentacion = models.CharField(max_length=100)
     ubicacion = models.CharField(max_length=100)
     dificultad = models.CharField(max_length=6)

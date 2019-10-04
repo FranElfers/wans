@@ -18,17 +18,21 @@
 			<li><a href="/admin">Admin</a></li>
 			{% endif %}
 			<li><a href="{% url 'inicio' %}">Inicio</a></li>
-			<li><a href="#">¿Buscas trabajo?</a></li>
+            <li><a href="#">¿Buscas trabajo?</a></li>
 
 			{% if user.is_authenticated %}
-			<li><a href="{% url 'trabajos' %}">Lista</a></li>
+                {% for group in user.groups.all %}
+                    {% if group.name == 'Tecnicos' %}
+                        <li><a href="{% url 'trabajos' %}">Lista</a></li>
+                    {% endif %}
+                {% endfor %}
 			<li><a href="{% url 'logout' %}">Log out</a></li>
 			{% else %}
 			<li><a href="{% url 'login' %}">Log in</a></li>
 			<li><a href="{% url 'signup' %}">Signup</a></li>
 			{% endif %}
 			<li class="profile">
-				<a class="profile-link" href="{% url 'perfil' %}">
+				<a class="profile-link" href="{% if user.is_authenticated %}{% url 'perfil' %}{% endif %}">
 					<img src="{% static 'images/foto.jpg' %}">
 				</a>
 			</li>

@@ -85,3 +85,8 @@ a.iniciar {
 .espacio {
 	height: 20px;
 }
+
+.error {
+	color: red;
+	font-style: italic;
+}

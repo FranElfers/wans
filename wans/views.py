@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.decorators import login_required
 from .models import *
-from django.contrib.auth.models import User
 from .forms import PedidoForm, ClienteForm
-from django.shortcuts import get_object_or_404
+#from django.contrib.auth.models import User
+#from django.contrib.auth.decorators import login_required
+#from django.shortcuts import get_object_or_404
 
 
 # Create your views here.
@@ -18,7 +18,7 @@ def trabajos(request):
 
 
 def new_pedido(request):
-    # user = get_object_or_404(User, pk=user_id)
+    #user = get_object_or_404(User, pk=user_id)
     if request.method == "POST":
         form = PedidoForm(request.POST)
         if form.is_valid():
@@ -40,12 +40,17 @@ def signup(request):
     if request.method == 'POST':
         user_form = UserCreationForm(request.POST)
         cliente_form = ClienteForm(request.POST)
-        if user_form.is_valid() and cliente_form.is_valid():
+        cliente = cliente_form.save(commit=False)
+        dni_repetido = Cliente.objects.filter(dni=cliente.dni).exists()
+        if user_form.is_valid() and cliente_form.is_valid() and not dni_repetido:
             user = user_form.save()
-            cliente = cliente_form.save(commit=False)
             cliente.usuario = user
+            clientes = Group.objects.get(name='Clientes')
+            clientes.user_set.add(cliente.usuario)
             cliente.save()
-            return redirect('inicio')
+            return redirect('login')
+        elif dni_repetido:
+            cliente_form.dni_error = 'Error: DNI ya registrado'
     else:
         user_form = UserCreationForm()
         cliente_form = ClienteForm()
@@ -53,3 +58,4 @@ def signup(request):
         'user_form': user_form,
         'cliente_form': cliente_form
     })
+

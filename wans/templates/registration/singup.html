@@ -7,20 +7,23 @@
         {% csrf_token %}
         <span>{{ user_form.username.label_tag }}</span>
         <span>{{ user_form.username }}</span>
+        <span class="error">{{ user_form.username.errors }}</span>
         <br>
         <span>Nombre real</span>
         <span>{{ cliente_form.nombre }}</span>
         <br>
         <span>DNI</span>
         <span>{{ cliente_form.dni }}</span>
+        <span class="error">{{ cliente_form.dni_error }}</span>
         <br>
         <span>{{ user_form.password1.label_tag }}</span>
         <span>{{ user_form.password1 }}</span>
+        <p>Su contraseña debe contener al menos 8 caracteres y no puede ser completamente numérica.</p>
         <br>
         <span>{{ user_form.password2.label_tag }}</span>
         <span>{{ user_form.password2 }}</span>
-        {% if user_form.errors or cliente_form.errors %}
-            <span>Error</span>
+        {% if user_form.errors %}
+            <span class="error">{{ user_form.error_messages }}</span>
         {% endif %}
         <input class="iniciar" type="submit" value="signup"/>
         <a class="iniciar" href="{% url 'inicio' %}">Volver</a>
