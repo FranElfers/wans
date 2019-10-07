@@ -1,0 +1,7 @@
+{% extends 'wans/nav_base.html' %}
+{% load static %}
+{% block content %}
+    <form action='{% url 'mandar_cv' %}' method='GET'>
+        <button type='submit'>Enviar curriculum</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'wans/nav_base.html' %}
+{% load static %}
+{% block content %}
+<table>
+    <tr>
+        <th>Usuario</th>
+        <th>Accion</th>
+    </tr>
+    {% for c in clientes %}
+    <tr>
+        <td>{{ c.username }}</td>
+        <td>
+            <form action='{% url 'agregar_a_grupo' user_id=c.id %}' method='GET'>
+                <button type='submit'>Aceptar</button>
+            </form>
+            <form action='{% url 'sacar_de_grupo' user_id=c.id %}' method='GET'>
+                <button type='submit'>Denegar</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
