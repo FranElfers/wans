@@ -5,7 +5,7 @@ body {
 .contenedor {
 	background: white;
 	padding: 10px;
-	margin: 0 auto;
+	margin: 100px auto;
 	width: 400px;
 	border-radius: 15px;
 	box-shadow: 4px 4px 10px #888888;
@@ -58,32 +58,6 @@ a.iniciar {
 
 .iniciar:hover {
 	transform: translate(0,-7px);
-}
-.circle {
-	background: white;
-	margin: 100px auto 0;
-	width: 300px;
-	height: 150px;
-	border-radius: 600px 600px 0 0;
-	border: 1px;
-}
-.cabeza, .cuerpo {
-	background: lightgrey;
-}
-.cabeza {
-	margin: 0 auto 0;
-	height: 50px;
-	width: 50px;
-	border-radius: 50%;
-}
-.cuerpo {
-	margin: 20px auto 0;
-	height: 100px;
-	width: 150px;
-	border-radius: 50% 50% 0 0;
-}
-.espacio {
-	height: 20px;
 }
 
 .error {
