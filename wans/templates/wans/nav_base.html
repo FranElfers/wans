@@ -16,9 +16,10 @@
 			<li class="user"><b>{{ user.username }}</b></li>
 			{% if user.is_superuser %}
 			<li><a href="/admin">Admin</a></li>
+            <li><a href="{% url 'revisar' %}">Revisar</a></li>
 			{% endif %}
 			<li><a href="{% url 'inicio' %}">Inicio</a></li>
-            <li><a href="#">¿Buscas trabajo?</a></li>
+            <li><a href="{% url 'new_tecnico' %}">¿Buscas trabajo?</a></li>
 
 			{% if user.is_authenticated %}
                 {% for group in user.groups.all %}

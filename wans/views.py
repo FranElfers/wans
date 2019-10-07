@@ -1,9 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
 from .forms import PedidoForm, ClienteForm
-from django.contrib.auth.models import Group
-#from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 #from django.contrib.auth.decorators import login_required
 #from django.shortcuts import get_object_or_404
 
@@ -19,7 +18,6 @@ def trabajos(request):
 
 
 def new_pedido(request):
-    #user = get_object_or_404(User, pk=user_id)
     if request.method == "POST":
         form = PedidoForm(request.POST)
         if form.is_valid():
@@ -60,3 +58,40 @@ def signup(request):
         'cliente_form': cliente_form
     })
 
+
+def new_tecnico(request):
+    return render(request, 'wans/new_tecnico.html', {})
+
+
+def mandar_cv(request):
+    usuario = request.user
+    revision = Group.objects.get(name='A revisar')
+    revision.user_set.add(usuario)
+    return redirect('inicio')
+
+
+def agregar_a_grupo(request, user_id):
+    usuario = User.objects.filter(id=user_id)
+    tecnicos = Group.objects.get(name='Tecnicos')
+    revision = Group.objects.get(name='A revisar')
+    tecnicos.user_set.add(usuario[0])
+    revision.user_set.remove(usuario[0])
+    return redirect('inicio')
+
+
+def sacar_de_grupo(request, user_id):
+    usuario = User.objects.filter(id=user_id)
+    grupo = Group.objects.get(name='A revisar')
+    grupo.user_set.remove(usuario[0])
+    return redirect('inicio')
+
+
+def revisar(request):
+    clientes = User.objects.filter(groups__name='A revisar')
+    return render(request, 'wans/revisar.html', {'clientes': clientes})
+
+
+def eliminar_pedido(request, pk):
+    pedido = get_object_or_404(Pedido, pk=pk)
+    pedido.delete()
+    return redirect('trabajos')

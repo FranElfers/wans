@@ -9,7 +9,6 @@ class PedidoForm(forms.ModelForm):
 
 
 class ClienteForm(forms.ModelForm):
-
     dni_error = ''
 
     class Meta:
