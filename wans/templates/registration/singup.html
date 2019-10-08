@@ -1,32 +1,38 @@
 {% extends 'registration/login_base.html' %}
 {% load static %}
 {% block content %}
-<div class="contenedor">
+<div class="contenedor" style="margin: 0 auto;">
     <h1>Regístrate</h1>
     <form method="POST">
         {% csrf_token %}
         <span>{{ user_form.username.label_tag }}</span>
-        <span>{{ user_form.username }}</span>
+        <span class="input">{{ user_form.username }}</span>
         <span class="error">{{ user_form.username.errors }}</span>
         <br>
         <span>Nombre real</span>
-        <span>{{ cliente_form.nombre }}</span>
+        <span class="input">{{ cliente_form.nombre }}</span>
         <br>
         <span>DNI</span>
-        <span>{{ cliente_form.dni }}</span>
+        <span class="input">{{ cliente_form.dni }}</span>
         <span class="error">{{ cliente_form.dni_error }}</span>
         <br>
         <span>{{ user_form.password1.label_tag }}</span>
-        <span>{{ user_form.password1 }}</span>
-        <p>Su contraseña debe contener al menos 8 caracteres y no puede ser completamente numérica.(NO PUEDE CONTENER EL USUARIO)</p>
+        <span class="input">{{ user_form.password1 }}<input class="ver" type="button" value="P"></span>
+        <p>Su contraseña debe contener al menos 8 caracteres y no puede ser completamente numérica.</p>
         <br>
         <span>{{ user_form.password2.label_tag }}</span>
-        <span>{{ user_form.password2 }}</span>
+        <span class="input">{{ user_form.password2 }}</span>
         {% if user_form.errors %}
             <span class="error">{{ user_form.error_messages }}</span>
         {% endif %}
-        <input class="iniciar" type="submit" value="signup"/>
+        <input class="iniciar" type="submit" value="Ingresar"/>
         <a class="iniciar" href="{% url 'inicio' %}">Volver</a>
     </form>
+    <script>
+        $('.ver').on('toggle',function(){
+            var pw = $('#id_password1');
+            pw.attr('type','text');
+        })
+    </script>
 </div>
 {% endblock %}

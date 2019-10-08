@@ -1,7 +1,7 @@
 {% extends 'registration/login_base.html' %}
 {% load static %}
 {% block content %}
-<div class="contenedor">
+<div class="contenedor" style="margin: 100px auto;">
     <h1>Ingresá</h1>
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}

@@ -5,7 +5,6 @@ body {
 .contenedor {
 	background: white;
 	padding: 10px;
-	margin: 100px auto;
 	width: 400px;
 	border-radius: 15px;
 	box-shadow: 4px 4px 10px #888888;
@@ -18,37 +17,53 @@ h1 {
 	color: #3a3a3a;
 }
 
-span input {
-	padding: 5px;
+span input, .input {
 	width: 300px;
-	font-size: 1.3em;
-	margin-top: 4px;
+	font-size: 14px;
 	border: none;
 	border-radius: 5px;
 	background: lightgrey;
 }
 
+.ver {
+	display: inline-block;
+	float: right;
+	width: 30px;
+}
+span input {
+	padding: 5px;
+	margin-top: 4px;
+}
+#id_password1 {
+	display: inline-block;
+	width: 85%;
+}
 span {margin-left: 40px;}
-span, span input{
-	font-family: Arial;
+span, span input, p{
+	font-family: Montserrat;
 	display: block;
 	outline: none;
 }
 
 .iniciar {
-    display: inline-block;
-	font-family: Arial;
+  	display: inline-block;
 	padding: 6px;
-	margin: 50px 20px 20px;
+	margin: 0 20px 20px;
 	border: none;
 	border-radius: 5px;
 	outline: none;
-	transition-duration: 0.4s;
+	transition: background-image;
 }
 
 input.iniciar {
-    float: right;
-	background: #5EE467;
+	font-size: 25px;
+	margin: 20px 40px;
+	width: 310px;
+	font-weight: 500;
+	height: 40px;
+	background: linear-gradient(to bottom right, #b3f1ff, #78ceff);
+	color: black;
+	transition: color .5s;
 }
 
 a.iniciar {
@@ -57,7 +72,7 @@ a.iniciar {
 }
 
 .iniciar:hover {
-	transform: translate(0,-7px);
+	color: #666;
 }
 
 .error {
