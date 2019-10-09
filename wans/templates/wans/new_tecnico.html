@@ -2,6 +2,14 @@
 {% load static %}
 {% block content %}
     <form action='{% url 'mandar_cv' %}' method='GET'>
-        <button type='submit'>Enviar curriculum</button>
+        {% if user.groups.all|length == 2 %}
+            {% for group in user.groups.all %}
+                {% if group.name == 'A revisar' %}
+                    <span>Currículum enviado</span>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <button type='submit'>Enviar curriculum</button>
+        {% endif %}
     </form>
 {% endblock %}

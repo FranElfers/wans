@@ -17,8 +17,8 @@
         <span class="error">{{ cliente_form.dni_error }}</span>
         <br>
         <span>{{ user_form.password1.label_tag }}</span>
-        <span class="input">{{ user_form.password1 }}<input class="ver" type="button" value="P"></span>
-        <p>Su contraseña debe contener al menos 8 caracteres y no puede ser completamente numérica.</p>
+        <span class="input" style="width: 310px">{{ user_form.password1 }}<i class="fa fa-eye show"></i><i class="fa fa-eye-slash hide"></i></span>
+        <p class="error"></p>
         <br>
         <span>{{ user_form.password2.label_tag }}</span>
         <span class="input">{{ user_form.password2 }}</span>
@@ -29,9 +29,31 @@
         <a class="iniciar" href="{% url 'inicio' %}">Volver</a>
     </form>
     <script>
-        $('.ver').on('toggle',function(){
-            var pw = $('#id_password1');
-            pw.attr('type','text');
+        $(document).ready(function(){
+            $('.show').hide();
+        });
+
+        $('.hide').on('click',function(){
+            $('.hide').hide();
+            $('.show').show();
+            $('#id_password1').attr('type','text');
+        });
+
+        $('.show').on('click',function(){
+            $('.show').hide();
+            $('.hide').show();
+            $('#id_password1').attr('type','password');
+        });
+
+        var pw = $('#id_password1');
+        pw.on('blur',function(){
+            if (pw.val().length < 8){
+                $('p').text('Su contraseña debe tener minimo 8 carácteres')
+            } else if ($.isNumeric(pw.val())){
+                $('p').text('Su contraseña no puede ser completamente numérica')
+            } else {
+                $('p').text('')
+            }
         })
     </script>
 </div>

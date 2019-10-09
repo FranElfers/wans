@@ -1,5 +1,6 @@
 body {
 	background: url('../images/login.png');
+	font-family: Montserrat;
 }
 
 .contenedor {
@@ -25,22 +26,33 @@ span input, .input {
 	background: lightgrey;
 }
 
-.ver {
+.fa {
+	color: #a2a2a2;
+	margin-top: 2px;
+	font-size: 22px;
 	display: inline-block;
 	float: right;
 	width: 30px;
+	height: 24px;
 }
+
 span input {
 	padding: 5px;
 	margin-top: 4px;
 }
-#id_password1 {
+#id_password1, #id_password2 {
 	display: inline-block;
+	font-size: 32px;
+	margin-top: 0;
+	height: 14px;
 	width: 85%;
+}
+#id_password2 {
+	height: 20px;
+	width: 100%;
 }
 span {margin-left: 40px;}
 span, span input, p{
-	font-family: Montserrat;
 	display: block;
 	outline: none;
 }

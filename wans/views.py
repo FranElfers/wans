@@ -9,7 +9,9 @@ from django.contrib.auth.models import User, Group
 
 # Create your views here.
 def inicio(request):
-    return render(request, 'wans/index.html', {})
+    usuario = request.user
+    grupos = usuario.groups.all
+    return render(request, 'wans/index.html', {'grupos': grupos})
 
 
 def trabajos(request):
