@@ -41,7 +41,7 @@
             {% endif %}
 
 			<li class="profile">
-				<a class="profile-link" href="{% if user.is_authenticated %}{% url 'perfil' %}{% endif %}">
+				<a class="profile-link" href="{% if user.is_authenticated %}{% url 'perfil' %}{% else %}{% url 'login' %}{% endif %}">
 					<img src="{% static 'images/foto.png' %}">
 				</a>
 			</li>

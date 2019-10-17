@@ -8,6 +8,12 @@ class PedidoForm(forms.ModelForm):
         fields = ('presentacion', 'ubicacion')
 
 
+class CV(forms.ModelForm):
+    class Meta:
+        model = Cliente
+        fields = ('curriculum',)
+
+
 class ClienteForm(forms.ModelForm):
     dni_error = ''
 

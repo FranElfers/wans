@@ -5,19 +5,23 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/pedido.css' %}">
 <script>
 $(document).ready(function(){
-	$("#2").hide();
-})
+    $('#2').hide();
+});
 
-var transicion = function(a,b){
-	var first = '#' + a;
-	var second = '#' + b;
-	$(first).fadeOut();
-	$(second).delay(500).fadeIn();
+var transicion = function(a){
+    $(a).animate({left: '250px', opacity: '0'});
 }
+
+$('.next').on('click', function(){
+    transicion('h1');
+});
+
+
 </script>
 <form method="POST">
 	{% csrf_token %}
 	<section>
+
 		<div id="1">
 			<h1>Primera pagina</h1>
 			<div class="pag">
@@ -26,15 +30,34 @@ var transicion = function(a,b){
 				<div></div>
 			</div>
 			<div class="pregunta">
-				<p>Descripción del problema</p>
+				<div>Descripción del problema</div>
 				{{ form.presentacion }}
 			</div>
 			<div class="pregunta">
-				<p>Ubicación</p>
+				<div>Ubicación</div>
 				{{ form.ubicacion }}
 			</div>
-		</div>
-		<button type="submit">Subir</button>
+        </div>
+    	<div id="2">
+			<h1>Segunda pagina</h1>
+			<div class="pag">
+				<div style="background: yellow"></div>
+				<div></div>
+				<div></div>
+			</div>
+			<div class="pregunta">
+				<div>Descripción del problema</div>
+				{{ form.presentacion }}
+			</div>
+			<div class="pregunta">
+				<div>Ubicación</div>
+				{{ form.ubicacion }}
+			</div>
+    	</div>
+
+        <button class="prev">Anterior</button>
+        <button class="next">Siguiente</button>
+		<button class="subir" type="submit">Subir</button>
 	</section>
 </form>
 {% endblock %}

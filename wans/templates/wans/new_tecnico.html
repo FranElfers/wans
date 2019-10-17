@@ -1,7 +1,7 @@
 {% extends 'wans/nav_base.html' %}
 {% load static %}
 {% block content %}
-    <form action='{% url 'mandar_cv' %}' method='GET'>
+    <form action='{% url 'revisar' %}' method='GET'>
         {% if user.groups.all|length == 2 %}
             {% for group in user.groups.all %}
                 {% if group.name == 'A revisar' %}
@@ -9,6 +9,8 @@
                 {% endif %}
             {% endfor %}
         {% else %}
+            {% csrf_token %}
+            {{ form.as_p }}
             <button type='submit'>Enviar curriculum</button>
         {% endif %}
     </form>

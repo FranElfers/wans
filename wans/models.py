@@ -7,6 +7,7 @@ class Cliente(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.CASCADE)
     nombre = models.CharField(max_length=50)
     dni = models.IntegerField(null=True)
+    curriculum = models.TextField(max_length=3000, null=True)
 
     def __str__(self):
         return self.usuario.username

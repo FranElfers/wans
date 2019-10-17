@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
-from .forms import PedidoForm, ClienteForm
+from .forms import PedidoForm, ClienteForm, CV
 from django.contrib.auth.models import User, Group
 #from django.contrib.auth.decorators import login_required
 #from django.shortcuts import get_object_or_404
@@ -62,14 +62,18 @@ def signup(request):
 
 
 def new_tecnico(request):
-    return render(request, 'wans/new_tecnico.html', {})
-
-
-def mandar_cv(request):
-    usuario = request.user
-    revision = Group.objects.get(name='A revisar')
-    revision.user_set.add(usuario)
-    return redirect('inicio')
+    if request.method == 'POST':
+        form = CV(request.POST)
+        if form.is_valid():
+            cv = form.save(commit=False)
+            cv.usuario = request.user
+            grupo = Group.objects.get(name='A revisar')
+            grupo.user_set.add(cv.usuario)
+            cv.save()
+            return redirect('inicio')
+    else:
+        form = CV()
+    return render(request, 'wans/new_tecnico.html', {'form': form})
 
 
 def agregar_a_grupo(request, user_id):
