@@ -17,6 +17,8 @@ class Pedido(models.Model):
     usuario = models.ForeignKey("auth.User", on_delete=models.CASCADE, null=True)
     presentacion = models.CharField(max_length=100)
     ubicacion = models.CharField(max_length=100)
+    latitud = models.FloatField(default=0.0)
+    longitud = models.FloatField(default=0.0)
     dificultad = models.CharField(max_length=6)
 
     def __str__(self):

@@ -51,6 +51,9 @@
             <div class="pregunta">
                 <div>Ubicación</div>
                 <p>Para buscar su ubicacion, ponga en el buscador a la izquierda su calle, el numero y el codigo postal.</p>
+                <br><br>
+                <b class="resultado"></b>
+                <a href="">Confirmar ubicación</a>
                 <div id="map"></div>
             </div>
         </div>
@@ -71,7 +74,6 @@
 $(document).ready(function(){
     $('#2').hide();
     $('#3').hide();
-    console.log(2);
 });
 
 var map = L.map('map').setView([-34.78, -58.20], 14);
@@ -84,10 +86,11 @@ var geocodeService = L.esri.Geocoding.geocodeService();
 var results = L.layerGroup().addTo(map);
 
 searchControl.on('results', function (data) {
-results.clearLayers();
-for (var i = data.results.length - 1; i >= 0; i--) {
-  results.addLayer(L.marker(data.results[i].latlng));
-}
+    $('.resultado').text(data.text + data.lat +data.lng);
+    results.clearLayers();
+    for (var i = data.results.length - 1; i >= 0; i--) {
+      results.addLayer(L.marker(data.results[i].latlng));
+    }
 });
 
 map.on('click', function (e) {

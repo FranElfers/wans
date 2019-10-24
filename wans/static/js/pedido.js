@@ -14,10 +14,10 @@ var geocodeService = L.esri.Geocoding.geocodeService();
 var results = L.layerGroup().addTo(map);
 
 searchControl.on('results', function (data) {
-results.clearLayers();
-for (var i = data.results.length - 1; i >= 0; i--) {
-  results.addLayer(L.marker(data.results[i].latlng));
-}
+    results.clearLayers();
+    for (var i = data.results.length - 1; i >= 0; i--) {
+      results.addLayer(L.marker(data.results[i].latlng));
+    }
 });
 
 map.on('click', function (e) {

@@ -40,6 +40,11 @@ section h1 {padding: 10px;}
 	border-radius: 50%
 }
 
+.resultado {
+	padding: 3px;
+	background: lightblue;
+}
+
 #map {
 	position: relative;
 	top:0;
