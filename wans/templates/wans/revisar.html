@@ -8,14 +8,11 @@
     </tr>
     {% for c in clientes %}
     <tr>
-        <td>{{ c.username }}</td>
+        <td>{{ c.nombre }}</td>
+        <td>{{ c.curriculum }}</td>
         <td>
-            <form action='{% url 'agregar_a_grupo' user_id=c.id %}' method='GET'>
-                <button type='submit'>Aceptar</button>
-            </form>
-            <form action='{% url 'sacar_de_grupo' user_id=c.id %}' method='GET'>
-                <button type='submit'>Denegar</button>
-            </form>
+            <a href='{% url 'agregar_a_grupo' user_id=c.usuario_id %}'>Aceptar</a>
+            <a href='{% url 'sacar_de_grupo' user_id=c.usuario_id %}'>Denegar</a>
         </td>
     </tr>
     {% endfor %}

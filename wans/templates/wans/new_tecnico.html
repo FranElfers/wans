@@ -1,7 +1,7 @@
 {% extends 'wans/nav_base.html' %}
 {% load static %}
 {% block content %}
-    <form action='{% url 'revisar' %}' method='GET'>
+    <form method='POST'>
         {% if user.groups.all|length == 2 %}
             {% for group in user.groups.all %}
                 {% if group.name == 'A revisar' %}

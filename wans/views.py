@@ -33,6 +33,22 @@ def new_pedido(request):
     return render(request, 'wans/pedido.html', {'form': form})
 
 
+def new_tecnico(request):
+    cliente = get_object_or_404(Cliente, usuario=request.user)
+    if request.method == 'POST':
+        form = CV(request.POST,instance=cliente)
+        if form.is_valid():
+            cliente = form.save(commit=False)
+            cliente.usuario = request.user
+            grupo = Group.objects.get(name='A revisar')
+            grupo.user_set.add(cliente.usuario)
+            cliente.save()
+            return redirect('inicio')
+    else:
+        form = CV()
+    return render(request, 'wans/new_tecnico.html', {'form': form})
+
+
 def perfil(request):
     return render(request, 'wans/perfil.html', {})
 
@@ -61,21 +77,6 @@ def signup(request):
     })
 
 
-def new_tecnico(request):
-    if request.method == 'POST':
-        form = CV(request.POST)
-        if form.is_valid():
-            cv = form.save(commit=False)
-            cv.usuario = request.user
-            grupo = Group.objects.get(name='A revisar')
-            grupo.user_set.add(cv.usuario)
-            cv.save()
-            return redirect('inicio')
-    else:
-        form = CV()
-    return render(request, 'wans/new_tecnico.html', {'form': form})
-
-
 def agregar_a_grupo(request, user_id):
     usuario = User.objects.filter(id=user_id)
     tecnicos = Group.objects.get(name='Tecnicos')
@@ -93,7 +94,7 @@ def sacar_de_grupo(request, user_id):
 
 
 def revisar(request):
-    clientes = User.objects.filter(groups__name='A revisar')
+    clientes = Cliente.objects.filter(usuario__groups__name='A revisar')
     return render(request, 'wans/revisar.html', {'clientes': clientes})
 
 
