@@ -5,7 +5,7 @@ from .models import Pedido, Cliente
 class PedidoForm(forms.ModelForm):
     class Meta:
         model = Pedido
-        fields = ('presentacion',)
+        fields = ('presentacion', 'ubicacion', 'latitud', 'longitud')
 
 
 class CV(forms.ModelForm):

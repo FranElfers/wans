@@ -40,8 +40,10 @@ section h1 {padding: 10px;}
 	border-radius: 50%
 }
 
-.resultado {
+.confirmar {
 	padding: 3px;
+}
+.confirmar:hover {
 	background: lightblue;
 }
 

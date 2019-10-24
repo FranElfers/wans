@@ -38,7 +38,7 @@
             </div>
             <div class="pregunta">
                 <div>Descripción del problema</div>
-                {{ form.presentacion }}
+                <input type="text" class="presentacion">
             </div>
         </div>
         <div id="2">
@@ -53,60 +53,24 @@
                 <p>Para buscar su ubicacion, ponga en el buscador a la izquierda su calle, el numero y el codigo postal.</p>
                 <br><br>
                 <b class="resultado"></b>
-                <a href="">Confirmar ubicación</a>
+                <a class="confirmar">Confirmar ubicación</a>
                 <div id="map"></div>
             </div>
         </div>
         <div id="3">
             <div>Tercera pagina</div>
+            <p>Usuario: {{ user.username }}</p>
+            <p id="dir"></p>
             <form method="POST">
                 {% csrf_token %}
-                {{ form.as_p }}
+                {% for f in form %}
+                    <p class="hide">{{ f }}</p>
+                {% endfor %}
                 <button class="subir" type="submit">Subir</button>
             </form>
         </div>
 
-        <button class="prev">Anterior</button>
-        <button onclick="pasarPagina('#1','#2')" class="next">Siguiente</button>
+        <button onclick="pasarPagina(false)" class="prev">Anterior</button>
+        <button onclick="pasarPagina(true)" class="next">Siguiente</button>
     </section>
-
-    <script>
-$(document).ready(function(){
-    $('#2').hide();
-    $('#3').hide();
-});
-
-var map = L.map('map').setView([-34.78, -58.20], 14);
-
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
-
-var searchControl = L.esri.Geocoding.geosearch().addTo(map);
-var geocodeService = L.esri.Geocoding.geocodeService();
-
-var results = L.layerGroup().addTo(map);
-
-searchControl.on('results', function (data) {
-    $('.resultado').text(data.text + data.lat +data.lng);
-    results.clearLayers();
-    for (var i = data.results.length - 1; i >= 0; i--) {
-      results.addLayer(L.marker(data.results[i].latlng));
-    }
-});
-
-map.on('click', function (e) {
-    geocodeService.reverse().latlng(e.latlng).run(function (error, result) {
-        if (error) {
-            return;
-        }
-        L.marker(result.latlng).addTo(map).bindPopup(result.address.Match_addr).openPopup();
-    });
-});
-
-// Pasar pagina
-var pasarPagina = function(a,b){
-    $(a).hide();
-    $(b).show();
-};
-    </script>
-
 {% endblock %}
