@@ -29,36 +29,31 @@
     crossorigin=""></script>
 
     <section>
-        <div id="1">
-            <h1>Primera pagina</h1>
-            <div class="pag">
-                <div style="background: yellow"></div>
-                <div></div>
-                <div></div>
-            </div>
-            <div class="pregunta">
-                <div>Descripción del problema</div>
-                <input type="text" class="presentacion">
-            </div>
+        <h1>Haz tu pedido</h1>
+        <div class="pag">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div class="index"></div>
         </div>
-        <div id="2">
-            <h1>Segunda pagina</h1>
-            <div class="pag">
-                <div style="background: yellow"></div>
-                <div></div>
-                <div></div>
-            </div>
-            <div class="pregunta">
+
+        <div id="1" class="pregunta">
+            <div>Descripción del problema</div>
+            <input type="text" class="presentacion">
+        </div>
+
+        <div id="2" class="pregunta">
+            <div class="mapinfo">
                 <div>Ubicación</div>
                 <p>Para buscar su ubicacion, ponga en el buscador a la izquierda su calle, el numero y el codigo postal.</p>
                 <br><br>
                 <b class="resultado"></b>
                 <a class="confirmar">Confirmar ubicación</a>
-                <div id="map"></div>
             </div>
+            <div id="map"></div>
         </div>
-        <div id="3">
-            <div>Tercera pagina</div>
+
+        <div id="3" class="pregunta">
             <p>Usuario: {{ user.username }}</p>
             <p id="dir"></p>
             <form method="POST">
@@ -75,18 +70,29 @@
     </section>
     <script>
 var activa = 0;
-
+var posbarra= 33.3;
 $(document).ready(function(){
     pasarPagina(true);
     $('.hide').hide();
+    $('#1').css({padding:'15px 15px',height:'300px'});
 });
 
 var pasarPagina = function(sentido){
-    $('#1').hide();
-    $('#2').hide();
-    $('#3').hide();
+    // contenido
+    $('.prev, .next').hide();
+    $('#1, #2, #3').css({padding:'0px 15px',height:'0px'});
     sentido ? activa += 1 : activa -= 1;
-    $('#' + activa).show();
+    if (activa > 1){$('.prev').show();}
+    if (activa < 3){$('.next').show();}
+    $('#' + activa).css({padding:'15px 15px',height:'300px'});
+    //$('#' + activa).css({padding:'15px 15px',height:'auto'});
+
+    // barra
+    var valor = (activa - 1) * posbarra + '%';
+    $('.index').css('left',valor);
+    console.log(activa);
+    console.log(sentido);
+    console.log(valor);
 };
 
 var map = L.map('map').setView([-34.78, -58.20], 14);

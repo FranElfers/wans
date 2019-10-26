@@ -2,6 +2,7 @@ section {
 	margin: 50px auto;
 	background: white;
 	width: 80%;
+	transition: height .5s;
 }
 
 body {
@@ -12,7 +13,7 @@ body {
 section h1 {padding: 10px;}
 .pag {padding: 0 auto;margin: 5px 15px;}
 
-.pag div {
+.pag div:not(.index) {
 	display: inline-block;
 	margin: 5px auto;
 	height: 4px;
@@ -21,23 +22,39 @@ section h1 {padding: 10px;}
 	border-radius: 2px;
 }
 
+.index {
+	display: inline-block;
+	margin: 5px auto;
+	height: 5px;
+	width: 33%;
+	border-radius: 2px;
+	background: yellow;
+	position: relative;
+	top: -18px;
+	left: 1px;
+	transition: left .5s;
+}
+
 .pregunta {
 	margin: 15px;
-	padding: 15px;
+	padding: 0px;
+	height: 0px;
 	background: #eee;
+	overflow: hidden;
+	transition: height .5s, padding .5s;
 }
 
 .pregunta p {display: inline-block;	margin: 0;}
 
 .pregunta button {
-	margin-left: 5px;
-	height: 25px;
-	width: 25px;
-	float: right;
+	padding: 15px;
 	background: white;
 	border: none;
-	border-radius: 50%
+	border-radius: 5px;
+	transition: background-color .5s;
 }
+
+.pregunta button:hover {background-color: #ffd8bc}
 
 .confirmar {
 	padding: 3px;
@@ -46,14 +63,20 @@ section h1 {padding: 10px;}
 	background: lightblue;
 }
 
+.mapinfo {
+	display: inline-block;
+	width: 50%;
+}
+
 #map {
 	position: relative;
+	float: right;
 	top:0;
 	bottom:0;
 	right:0;
 	left:0;
-	width: 400px;
-	height: 400px;
+	width: 600px;
+	height: 300px;
 }
 
 .prev, .next {

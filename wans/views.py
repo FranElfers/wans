@@ -36,7 +36,7 @@ def new_pedido(request):
 def new_tecnico(request):
     cliente = get_object_or_404(Cliente, usuario=request.user)
     if request.method == 'POST':
-        form = CV(request.POST,instance=cliente)
+        form = CV(request.POST, instance=cliente)
         if form.is_valid():
             cliente = form.save(commit=False)
             cliente.usuario = request.user
