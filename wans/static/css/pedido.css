@@ -53,5 +53,14 @@ section h1 {padding: 10px;}
 	bottom:0;
 	right:0;
 	left:0;
-	height: 500px;
+	width: 400px;
+	height: 400px;
+}
+
+.prev, .next {
+	margin: 10px;
+	background: #a2c3ff;
+	border: none;
+	padding: 6px;
+	border-radius: 5px
 }
