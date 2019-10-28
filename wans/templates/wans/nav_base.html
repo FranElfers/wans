@@ -23,13 +23,17 @@
                     <li><a href="{% url 'revisar' %}">Revisar</a></li>
 			    {% endif %}
 
-                {% for group in user.groups.all %}
-                    {% if group.name == 'Tecnicos' %}
-                        <li><a href="{% url 'trabajos' %}">Lista</a></li>
-                    {% else %}
-                        <li><a href="{% url 'new_tecnico' %}">¿Buscas trabajo?</a></li>
-                    {% endif %}
-                {% endfor %}
+                {% if user.groups.all|length == 1 %}
+                    <li><a href="{% url 'new_tecnico' %}">¿Buscas trabajo?</a></li>
+                {% else %}
+                    {% for grupo in user.groups.all %}
+                        {% if forloop.counter == 2 and grupo.name == 'A revisar' %}
+                            <li><a href="{% url 'new_tecnico' %}">¿Buscas trabajo?</a></li>
+                        {% elif forloop.counter == 2 and grupo.name == 'Tecnicos' %}
+                            <li><a href="{% url 'trabajos' %}">Lista</a></li>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
 
                 <li><a href="{% url 'logout' %}">Log out</a></li>
 
