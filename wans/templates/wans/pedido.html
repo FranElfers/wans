@@ -71,6 +71,7 @@
         <div id="pag3" class="pregunta">
             <p>Usuario: {{ user.username }}</p>
             <p id="dir"></p>
+            <input type="text" class="presentacion">
             <form method="POST">
                 {% csrf_token %}
                 {% for f in form %}
