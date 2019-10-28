@@ -37,8 +37,23 @@
             <div class="index"></div>
         </div>
 
-        <div id="1" class="pregunta">
-            <div>Descripción del problema</div>
+        <div id="1" class="pregunta lista">
+            <div class="izq">
+                <div>¿Su computadora enciende?<input type="checkbox" id="1"></div>
+                <div>¿Muestra algo en la pantalla?<input type="checkbox" id="2"></div>
+                <div>¿Se reinicia sola?<input type="checkbox" id="3"></div>
+                <div>¿Es un problema de lentitud?<input type="checkbox" id="4"></div>
+                <div>¿Es un problema en la impresión?<input type="checkbox" id="5"></div>
+                <div>¿Tiene conexión a internet?<input type="checkbox" id="6"></div>
+            </div>
+            <div class="der">
+                <div>¿El problema es en algún programa de Office?<input type="checkbox" id="7"></div>
+                <div>¿Tiene problemas para instalar algún programa?<input type="checkbox" id="8"></div>
+                <div>¿Se tilda?<input type="checkbox" id="9"></div>
+                <div>¿Tiene problemas para conectar dispositivos?<input type="checkbox" id="10"></div>
+                <div>¿Considera que tiene virus en la pc?<input type="checkbox" id="11"></div>
+                <div>¿Su pc ya fue revisada por un técnico anteriormente?<input type="checkbox" id="12"></div>
+            </div>
             <input type="text" class="presentacion">
         </div>
 
@@ -69,6 +84,9 @@
         <button onclick="pasarPagina(true)" class="next">Siguiente</button>
     </section>
     <script>
+
+
+
 var activa = 0;
 var posbarra= 33.3;
 $(document).ready(function(){
