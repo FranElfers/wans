@@ -37,7 +37,7 @@
             <div class="index"></div>
         </div>
 
-        <div id="1" class="pregunta lista">
+        <div id="pag1" class="pregunta lista">
             <div class="izq">
                 <div>¿Su computadora enciende?<input type="checkbox" id="1"></div>
                 <div>¿Muestra algo en la pantalla?<input type="checkbox" id="2"></div>
@@ -57,7 +57,7 @@
             <input type="text" class="presentacion">
         </div>
 
-        <div id="2" class="pregunta">
+        <div id="pag2" class="pregunta">
             <div class="mapinfo">
                 <div>Ubicación</div>
                 <p>Para buscar su ubicacion, ponga en el buscador a la izquierda su calle, el numero y el codigo postal.</p>
@@ -68,7 +68,7 @@
             <div id="map"></div>
         </div>
 
-        <div id="3" class="pregunta">
+        <div id="pag3" class="pregunta">
             <p>Usuario: {{ user.username }}</p>
             <p id="dir"></p>
             <form method="POST">
@@ -84,65 +84,58 @@
         <button onclick="pasarPagina(true)" class="next">Siguiente</button>
     </section>
     <script>
+        var activa = 0;
+        var posbarra= 33.3;
+        $(document).ready(function(){
+            pasarPagina(true);
+            $('.hide').hide();
+            $('#pag1').css({padding:'15px 15px',height:'300px'});
+        });
 
+        var pasarPagina = function(sentido){
+            // contenido
+            $('.prev, .next').hide();
+            $('#pag1, #pag2, #pag3').css({padding:'0px 15px',height:'0px'});
+            sentido ? activa += 1 : activa -= 1;
+            if (activa > 1){$('.prev').show()}
+            if (activa < 3){$('.next').show()}
+            $('#pag' + activa).css({padding:'15px 15px',height:'300px'});
 
+            // barra
+            var valor = (activa - 1) * posbarra + '%';
+            $('.index').css('left',valor);
+        };
 
-var activa = 0;
-var posbarra= 33.3;
-$(document).ready(function(){
-    pasarPagina(true);
-    $('.hide').hide();
-    $('#1').css({padding:'15px 15px',height:'300px'});
-});
+        var map = L.map('map').setView([-34.78, -58.20], 14);
 
-var pasarPagina = function(sentido){
-    // contenido
-    $('.prev, .next').hide();
-    $('#1, #2, #3').css({padding:'0px 15px',height:'0px'});
-    sentido ? activa += 1 : activa -= 1;
-    if (activa > 1){$('.prev').show();}
-    if (activa < 3){$('.next').show();}
-    $('#' + activa).css({padding:'15px 15px',height:'300px'});
-    //$('#' + activa).css({padding:'15px 15px',height:'auto'});
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
 
-    // barra
-    var valor = (activa - 1) * posbarra + '%';
-    $('.index').css('left',valor);
-    console.log(activa);
-    console.log(sentido);
-    console.log(valor);
-};
+        var searchControl = L.esri.Geocoding.geosearch().addTo(map);
+        var geocodeService = L.esri.Geocoding.geocodeService();
 
-var map = L.map('map').setView([-34.78, -58.20], 14);
+        var results = L.layerGroup().addTo(map);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+        searchControl.on('results', function (data) {
+            $('.resultado').text(data.text);
+            $('#dir').text('Dirección: ' + data.text);
+            var presentacion = $('.presentacion').val();
+            $('#id_presentacion').val(presentacion);
+            $("#id_ubicacion").val(data.text);
+            $("#id_latitud").val(data.latlng.lat);
+            $("#id_longitud").val(data.latlng.lng);
+            results.clearLayers();
+            for (var i = data.results.length - 1; i >= 0; i--) {
+              results.addLayer(L.marker(data.results[i].latlng));
+            }
+        });
 
-var searchControl = L.esri.Geocoding.geosearch().addTo(map);
-var geocodeService = L.esri.Geocoding.geocodeService();
-
-var results = L.layerGroup().addTo(map);
-
-searchControl.on('results', function (data) {
-    $('.resultado').text(data.text);
-    $('#dir').text('Dirección: ' + data.text);
-    var presentacion = $('.presentacion').val();
-    $('#id_presentacion').val(presentacion);
-    $("#id_ubicacion").val(data.text);
-    $("#id_latitud").val(data.latlng.lat);
-    $("#id_longitud").val(data.latlng.lng);
-    results.clearLayers();
-    for (var i = data.results.length - 1; i >= 0; i--) {
-      results.addLayer(L.marker(data.results[i].latlng));
-    }
-});
-
-map.on('click', function (e) {
-    geocodeService.reverse().latlng(e.latlng).run(function (error, result) {
-        if (error) {
-            return;
-        }
-        L.marker(result.latlng).addTo(map).bindPopup(result.address.Match_addr).openPopup();
-    });
-});
+        map.on('click', function (e) {
+            geocodeService.reverse().latlng(e.latlng).run(function (error, result) {
+                if (error) {
+                    return;
+                }
+                L.marker(result.latlng).addTo(map).bindPopup(result.address.Match_addr).openPopup();
+            });
+        });
     </script>
 {% endblock %}
