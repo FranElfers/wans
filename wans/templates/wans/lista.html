@@ -2,19 +2,38 @@
 {% load static %}
 {% block content %}
     <table>
+        <thead>
+            <tr class="header">
+                <td>Cliente</td>
+                <td>Descripción</td>
+                <td>Distancia</td>
+                <td>Dificultad</td>
+            </tr>
+        </thead>
         {% for p in pedidos %}
-        <tr>
-            <td>{{ p.usuario }}</td>
-            <td>| {{ p.presentacion }}</td>
-            <td>| {{ p.ubicacion }}</td>
-            <td>| {{ p.dificultad }}</td>
-            <td>|
-                <a href="{% url 'eliminar_pedido' pk=p.id %}">Completar</a>
-            </td>
-        </tr>
+            <tr data-href="{% url 'pedido_detalle' pk=p.id %}">
+                <td>{{ p.usuario }}</td>
+                <td>{{ p.presentacion }}</td>
+                <td class="distancia">Entrar</td>
+                <td>{{ p.dificultad }}</td>
+            </tr>
         {% endfor %}
     </table>
     <script>
+        $("tr:not(.header)").click(function() {
+            window.location = $(this).data("href");
+        });
+/*
+        $(document).ready(function(){
+            $('tr:not(.header)').each(function(){
+                var lat = $(this).find('.latitud').value();
+                var lng = $(this).find('.longitud').value();
+                var dist = distanciaEnKm(parseFloat(lat),parseFloat(lng),-34.771216, -58.216800);
+                $(this).find('.distancia').text(dist);
+                console.log(dist);
+            });
+        });*/
+
         function distanciaEnKm(lat1, lon1, lat2, lon2) {
             var R = 6371; // Radius of the earth in km
             var dLat = deg2rad(lat2-lat1);  // deg2rad below
@@ -25,6 +44,7 @@
             Math.sin(dLon/2) * Math.sin(dLon/2);
             var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
             var d = R * c; // Distance in km
+            console.log(d);
             return d;
         }
 

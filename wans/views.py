@@ -102,3 +102,8 @@ def eliminar_pedido(request, pk):
     pedido = get_object_or_404(Pedido, pk=pk)
     pedido.delete()
     return redirect('trabajos')
+
+
+def pedido_detalle(request, pk):
+    pedido = get_object_or_404(Pedido, pk=pk)
+    return render(request, 'wans/pedido_detalle.html', {'pedido':pedido})
