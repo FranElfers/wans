@@ -1,0 +1,22 @@
+.detalle {
+    width: 40%;
+    background: white;
+    margin: 10px auto;
+    padding: 20px;
+    font-family: Montserrat;
+}
+
+.acciones {
+    float: right;
+    margin-top: 20px;
+}
+
+.acciones a {
+    padding: 10px;
+    color:#000;
+    text-decoration: none;
+}
+
+h2 {
+    display: inline-block;
+}
