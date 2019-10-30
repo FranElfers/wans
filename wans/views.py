@@ -20,6 +20,8 @@ def trabajos(request):
 
 
 def new_pedido(request):
+    cliente = Cliente.objects.get(usuario=request.user)
+    cliente = cliente.nombre
     if request.method == "POST":
         form = PedidoForm(request.POST)
         if form.is_valid():
@@ -30,7 +32,7 @@ def new_pedido(request):
             return redirect('inicio')
     else:
         form = PedidoForm()
-    return render(request, 'wans/pedido.html', {'form': form})
+    return render(request, 'wans/pedido.html', {'form': form, 'cliente': cliente})
 
 
 def new_tecnico(request):

@@ -54,24 +54,27 @@
                 <div>¿Considera que tiene virus en la pc?<input type="checkbox" id="11"></div>
                 <div>¿Su pc ya fue revisada por un técnico anteriormente?<input type="checkbox" id="12"></div>
             </div>
-            <input type="text" class="presentacion">
         </div>
 
         <div id="pag2" class="pregunta">
             <div class="mapinfo">
                 <div>Ubicación</div>
                 <p>Para buscar su ubicacion, ponga en el buscador a la izquierda su calle, el numero y el codigo postal.</p>
+                <input class="calle" type="text" placeholder="Calle">
+                <input class="numero" type="text" placeholder="Número">
+                <input class="localidad" type="text" placeholder="Localidad">
                 <br><br>
                 <b class="resultado"></b>
-                <a class="confirmar">Confirmar ubicación</a>
+                <a class="confirmar" onclick="buscarDireccion()">Buscar</a>
             </div>
             <div id="map"></div>
         </div>
 
         <div id="pag3" class="pregunta">
-            <p>Usuario: {{ user.username }}</p>
+            <p>Usuario: {{ cliente }}</p>
             <p id="dir"></p>
-            <input type="text" class="presentacion">
+            <input type="text" class="presentacion" placeholder="Agregue una breve descripción" style="width: 50%">
+            <span class="dificultad hide"></span>
             <form method="POST">
                 {% csrf_token %}
                 {% for f in form %}
@@ -83,6 +86,7 @@
 
         <button onclick="pasarPagina(false)" class="prev">Anterior</button>
         <button onclick="pasarPagina(true)" class="next">Siguiente</button>
+        <span class="error"></span>
     </section>
     <script>
         var activa = 0;
@@ -94,18 +98,64 @@
         });
 
         var pasarPagina = function(sentido){
-            // contenido
             $('.prev, .next').hide();
-            $('#pag1, #pag2, #pag3').css({padding:'0px 15px',height:'0px'});
-            sentido ? activa += 1 : activa -= 1;
+            $('.error').text('');
+
+            if(calcularDiferencia(12) || activa === 0){
+                // contenido
+                $('#pag1, #pag2, #pag3').css({padding:'0px 15px',height:'0px'});
+                sentido ? activa += 1 : activa -= 1;
+                $('#pag' + activa).css({padding:'15px 15px',height:'300px'});
+
+                // barra
+                var valor = (activa - 1) * posbarra + '%';
+                $('.index').css('left',valor);
+            } else if (activa > 0) {
+                $('.error').text('Selecciona al menos una opción');
+            }
             if (activa > 1){$('.prev').show()}
             if (activa < 3){$('.next').show()}
-            $('#pag' + activa).css({padding:'15px 15px',height:'300px'});
-
-            // barra
-            var valor = (activa - 1) * posbarra + '%';
-            $('.index').css('left',valor);
+            calcularDiferencia(12); // 12 preguntas
         };
+
+        var calcularDiferencia = function(from){
+            var lista = [];
+            var resultado = 0;
+
+            for (var i = 1; i < from +1; i++){
+                var bool = $('input#' +i).is(':checked');
+                if(bool){
+                    resultado++
+                }
+            }
+
+            // Rango de dificultad
+            var xMax = 5;
+            var xMin = 1;
+
+            // Rango de preguntas
+            var yMax = from;
+            var yMin = 0;
+
+            var percent = (resultado - yMin) / (yMax - yMin);
+            var dificultad = percent * (xMax - xMin) + xMin;
+
+            $('.dificultad').text('dificultad');
+            console.log('activa ' +activa);
+            return (resultado > 0);
+        };
+
+        var buscarDireccion = function(){
+            var calle = $('input.calle').val();
+            var numero = $('input.numero').val();
+            var localidad = $('input.localidad').val();
+            var buscador = $('.geocoder-control.leaflet-control');
+
+            buscador.addClass('geocoder-control-expanded');
+            buscador.find('input').val(calle + ' ' + numero + ' ' + localidad);
+        };
+
+        /* MAPA */
 
         var map = L.map('map').setView([-34.78, -58.20], 14);
 

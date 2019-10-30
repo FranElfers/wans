@@ -44,7 +44,7 @@ section h1 {padding: 10px;}
 	transition: height .5s, padding .5s;
 }
 
-.pregunta p {display: inline-block;	margin: 0;}
+.pregunta p {margin: 0;}
 
 .pregunta button {
 	padding: 15px;
@@ -102,4 +102,13 @@ section h1 {padding: 10px;}
 	margin-bottom: 10px;
 	padding: 10px;
 	background: white;
+}
+
+input[type='checkbox'] {
+	float: right;
+}
+
+.error {
+	color: red;
+	font-style: italic;
 }
