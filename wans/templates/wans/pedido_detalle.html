@@ -1,7 +1,30 @@
 {% extends 'wans/nav_base.html' %}
-{% load static %]
+{% load static %}
+
 
 {% block content %}
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+
+    <!-- Load Leaflet from CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+    integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+    crossorigin=""></script>
+
+    <!-- Load Esri Leaflet from CDN -->
+    <script src="https://unpkg.com/esri-leaflet@2.3.1/dist/esri-leaflet.js"
+    integrity="sha512-Np+ry4Dro5siJ1HZ0hTwn2jsmu/hMNrYw1EIK9EjsEVbDge4AaQhjeTGRg2ispHg7ZgDMVrSDjNrzH/kAO9Law=="
+    crossorigin=""></script>
+
+    <!-- Load Esri Leaflet Geocoder from CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.3.1/dist/esri-leaflet-geocoder.css"
+    integrity="sha512-v5YmWLm8KqAAmg5808pETiccEohtt8rPVMGQ1jA6jqkWVydV5Cuz3nJ9fQ7ittSxvuqsvI9RSGfVoKPaAJZ/AQ=="
+    crossorigin="">
+    <script src="https://unpkg.com/esri-leaflet-geocoder@2.3.1/dist/esri-leaflet-geocoder.js"
+    integrity="sha512-YUgyCwPXzSCFuYgNIsumhktAolzwxETPBwc+xAgJOW7B3/1r1EKf0WYpmNo+6a/9C/EAF9RxYnMynEmd+77fTA=="
+    crossorigin=""></script>
     <div class="detalle">
         <h2>{{ pedido.presentacion }}</h2>
         <div class="acciones">
@@ -11,30 +34,53 @@
         <p>Cliente: {{ pedido.usuario.cliente.nombre }}</p>
         <p>Dirección: {{ pedido.ubicacion }}</p>
         <p>Dificultad: {{ pedido.dificultad }}</p>
+        <p>Dificultad: {{ pedido.latitud }}</p>
+        <p>Dificultad: {{ pedido.longitud }}</p>
         <span class="distancia"></span>
+        <div id="map" style="height: 210px"></div>
     </div>
 
     <script>
-    function distanciaEnKm(lat1, lon1, lat2, lon2) {
-        var R = 6371; // Radius of the earth in km
-        var dLat = deg2rad(lat2-lat1);  // deg2rad below
-        var dLon = deg2rad(lon2-lon1);
-        var a =
-        Math.sin(dLat/2) * Math.sin(dLat/2) +
-        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-        Math.sin(dLon/2) * Math.sin(dLon/2);
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-        var d = R * c; // Distance in km
-        console.log(d);
-        return d;
-    }
+        function distanciaEnKm(lat1, lon1, lat2, lon2) {
+            var R = 6371; // Radius of the earth in km
+            var dLat = deg2rad(lat2-lat1);  // deg2rad below
+            var dLon = deg2rad(lon2-lon1);
+            var a =
+            Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+            Math.sin(dLon/2) * Math.sin(dLon/2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            var d = R * c; // Distance in km
+            console.log(d);
+            return d;
+        }
 
-    function deg2rad(deg) {
-        return deg * (Math.PI/180)
-    }
+        function deg2rad(deg) {
+            return deg * (Math.PI/180)
+        }
 
-    $(document).ready(function(){
-       $('.distancia').text(distanciaEnKm({{ pedido.latitud }},{{ pedido.longitud }},-34.771216, -58.216800))
-    });
+        $(document).ready(function(){
+           $('.distancia').text(distanciaEnKm({{ pedido.latitud }},{{ pedido.longitud }},-34.771216, -58.216800))
+        });
+
+        /* MAPA */
+
+        var map = L.map('map').setView([-34.78, -58.20], 14);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+
+        var geocodeService = L.esri.Geocoding.geocodeService();
+
+        var results = L.layerGroup().addTo(map);
+
+
+        var latlng = {
+            lat: '{{ pedido.latitud }}',
+            lng: '{{ pedido.longitud }}'
+        };
+
+        L.marker([latlng.lat, latlng.lng]).addTo(map);
+
+
     </script>
 {% endblock %}
