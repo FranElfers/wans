@@ -73,14 +73,15 @@
 
         var results = L.layerGroup().addTo(map);
 
-
+        var marcador = function(lat,lng){
+            L.marker([lat, lng]).addTo(map);
+        };
+        
         var latlng = {
             lat: '{{ pedido.latitud }}',
             lng: '{{ pedido.longitud }}'
         };
-
-        L.marker([latlng.lat, latlng.lng]).addTo(map);
-
-
+        
+        marcador({{ pedido.latitud }}, {{ pedido.longitud }});
     </script>
 {% endblock %}
