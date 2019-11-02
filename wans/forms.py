@@ -20,3 +20,9 @@ class ClienteForm(forms.ModelForm):
     class Meta:
         model = Cliente
         fields = ('nombre', 'dni')
+
+
+class FinalizarForm(forms.ModelForm):
+    class Meta:
+        model = Pedido
+        fields = ('finalizado',)

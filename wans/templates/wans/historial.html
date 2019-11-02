@@ -1,0 +1,40 @@
+{% extends 'wans/nav_base.html' %}
+{% load static %}
+{% block content %}
+    <table>
+        <thead>
+            <tr class="header">
+                <td>En vigencia</td>
+                <td>Descripción</td>
+                <td>Precio</td>
+                <td>Dificultad</td>
+            </tr>
+        </thead>
+        {% for p in abiertos %}
+            <tr>
+                <td></td>
+                <td>{{ p.presentacion }}</td>
+                <td>Precio</td>
+                <td>{{ p.dificultad }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <table>
+        <thead>
+            <tr class="header">
+                <td>Finalizados</td>
+                <td>Descripción</td>
+                <td>Precio</td>
+                <td>Dificultad</td>
+            </tr>
+        </thead>
+        {% for p in cerrados %}
+            <tr>
+                <td></td>
+                <td>{{ p.presentacion }}</td>
+                <td>Precio</td>
+                <td>{{ p.dificultad }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

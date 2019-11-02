@@ -20,6 +20,7 @@ class Pedido(models.Model):
     latitud = models.FloatField(default=0.0)
     longitud = models.FloatField(default=0.0)
     dificultad = models.FloatField(default=1)
+    finalizado = models.BooleanField(default=False)
 
     def __str__(self):
         return self.ubicacion

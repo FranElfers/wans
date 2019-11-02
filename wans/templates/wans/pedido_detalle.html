@@ -28,8 +28,11 @@
     <div class="detalle">
         <h2>{{ pedido.presentacion }} | {{ pedido.dificultad }} de 5</h2>
         <div class="acciones">
-            <a href="{% url 'trabajos' %}">Cancelar</a>
-            <a style="background: #4c8bff;color:#fff" href="{% url 'eliminar_pedido' pk=pedido.id %}">Aceptar</a>
+            <form method="POST">
+                {% csrf_token %}
+                <a href="{% url 'trabajos' %}">Cancelar</a>
+                <button type="submit" style="background: #4c8bff;color:#fff">Aceptar</button>
+            </form>
         </div>
         <p>Cliente: {{ pedido.usuario.cliente.nombre }}</p>
         <p>Dirección: {{ pedido.ubicacion }}</p>

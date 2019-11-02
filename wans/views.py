@@ -1,13 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
-from .forms import PedidoForm, ClienteForm, CV
+from .forms import PedidoForm, ClienteForm, CV, FinalizarForm
 from django.contrib.auth.models import User, Group
 #from django.contrib.auth.decorators import login_required
 #from django.shortcuts import get_object_or_404
 
 
 # Create your views here.
+def perfil(request):
+    return render(request, 'wans/perfil.html', {})
+
+
 def inicio(request):
     usuario = request.user
     grupos = usuario.groups.all
@@ -15,13 +19,32 @@ def inicio(request):
 
 
 def trabajos(request):
-    pedidos = Pedido.objects.all()
+    pedidos = Pedido.objects.filter(finalizado=False)
     return render(request, 'wans/lista.html', {'pedidos': pedidos})
 
 
 def pedido_enviado(request, pk):
     pedido = Pedido.objects.get(pk=pk)
-    return render(request, 'wans/pedido_enviado.html', {'cliente': pedido.usuario})
+    cliente = Cliente.objects.get(usuario=pedido.usuario)
+    return render(request, 'wans/pedido_enviado.html', {'cliente': cliente})
+
+
+def revisar(request):
+    clientes = Cliente.objects.filter(usuario__groups__name='A revisar')
+    return render(request, 'wans/revisar.html', {'clientes': clientes})
+
+
+def sacar_de_grupo(request, user_id):
+    usuario = User.objects.filter(id=user_id)
+    grupo = Group.objects.get(name='A revisar')
+    grupo.user_set.remove(usuario[0])
+    return redirect('inicio')
+
+
+def historial(request):
+    abiertos = Pedido.objects.filter(usuario=request.user, finalizado=False)
+    cerrados = Pedido.objects.filter(usuario=request.user, finalizado=True)
+    return render(request, 'wans/historial.html', {'abiertos': abiertos, 'cerrados': cerrados})
 
 
 def new_pedido(request):
@@ -53,10 +76,6 @@ def new_tecnico(request):
     else:
         form = CV()
     return render(request, 'wans/new_tecnico.html', {'form': form})
-
-
-def perfil(request):
-    return render(request, 'wans/perfil.html', {})
 
 
 def signup(request):
@@ -92,24 +111,15 @@ def agregar_a_grupo(request, user_id):
     return redirect('inicio')
 
 
-def sacar_de_grupo(request, user_id):
-    usuario = User.objects.filter(id=user_id)
-    grupo = Group.objects.get(name='A revisar')
-    grupo.user_set.remove(usuario[0])
-    return redirect('inicio')
-
-
-def revisar(request):
-    clientes = Cliente.objects.filter(usuario__groups__name='A revisar')
-    return render(request, 'wans/revisar.html', {'clientes': clientes})
-
-
-def eliminar_pedido(request, pk):
-    pedido = get_object_or_404(Pedido, pk=pk)
-    pedido.delete()
-    return redirect('trabajos')
-
-
 def pedido_detalle(request, pk):
     pedido = get_object_or_404(Pedido, pk=pk)
-    return render(request, 'wans/pedido_detalle.html', {'pedido':pedido})
+    if request.method == 'POST':
+        form = FinalizarForm(request.POST, instance=pedido)
+        if form.is_valid():
+            pedido = form.save(commit=False)
+            pedido.finalizado = True
+            pedido.save()
+            return redirect('trabajos')
+    else:
+        form = FinalizarForm()
+    return render(request, 'wans/pedido_detalle.html', {'pedido': pedido})
