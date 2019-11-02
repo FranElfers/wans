@@ -26,17 +26,13 @@
     integrity="sha512-YUgyCwPXzSCFuYgNIsumhktAolzwxETPBwc+xAgJOW7B3/1r1EKf0WYpmNo+6a/9C/EAF9RxYnMynEmd+77fTA=="
     crossorigin=""></script>
     <div class="detalle">
-        <h2>{{ pedido.presentacion }}</h2>
+        <h2>{{ pedido.presentacion }} | {{ pedido.dificultad }} de 5</h2>
         <div class="acciones">
             <a href="{% url 'trabajos' %}">Cancelar</a>
             <a style="background: #4c8bff;color:#fff" href="{% url 'eliminar_pedido' pk=pedido.id %}">Aceptar</a>
         </div>
         <p>Cliente: {{ pedido.usuario.cliente.nombre }}</p>
         <p>Dirección: {{ pedido.ubicacion }}</p>
-        <p>Dificultad: {{ pedido.dificultad }}</p>
-        <p>Dificultad: {{ pedido.latitud }}</p>
-        <p>Dificultad: {{ pedido.longitud }}</p>
-        <span class="distancia"></span>
         <div id="map" style="height: 210px"></div>
     </div>
 
@@ -60,12 +56,15 @@
         }
 
         $(document).ready(function(){
-           $('.distancia').text(distanciaEnKm({{ pedido.latitud }},{{ pedido.longitud }},-34.771216, -58.216800))
+           //$('.distancia').text(distanciaEnKm({{ pedido.latitud }},{{ pedido.longitud }},-34.771216, -58.216800))
         });
 
         /* MAPA */
 
-        var map = L.map('map').setView([-34.78, -58.20], 14);
+        var lat = '{{ pedido.latitud }}';
+        var lng = '{{ pedido.longitud }}';
+
+        var map = L.map('map').setView([lat.replace(',', '.'), lng.replace(',', '.')], 14);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
 
@@ -74,14 +73,10 @@
         var results = L.layerGroup().addTo(map);
 
         var marcador = function(lat,lng){
+            console.log(lat + ' ' + lng);
             L.marker([lat, lng]).addTo(map);
         };
-        
-        var latlng = {
-            lat: '{{ pedido.latitud }}',
-            lng: '{{ pedido.longitud }}'
-        };
-        
-        marcador({{ pedido.latitud }}, {{ pedido.longitud }});
+
+        marcador(lat.replace(',', '.'), lng.replace(',', '.'));
     </script>
 {% endblock %}
