@@ -1,11 +1,30 @@
 {% extends 'wans/nav_base.html' %}
 {% load static %}
 {% block content %}
-<div class="centro">
-	<div class="left">
-		<p>Servicio tecnico en computacion al instante!</p><br>
-		<a href="{% if user.is_authenticated %}{% url 'new_pedido' %}{% else %}{% url 'login' %}{% endif %}">Solicitar servicio</a>
-	</div>
-	<img src="{% static 'images/tecnico.png' %}	">
-</div>
+    <script>
+        $(document).ready(function() {
+            function loop() {
+                var i = $('i');
+                i.css({bottom:0});
+                i.animate ({bottom: '+=14'}, 1000, 'swing',);
+                i.animate ({bottom: '-=14'}, 1000, 'swing',function() {loop();});
+            }
+            loop();
+        });
+    </script>
+
+
+    <div class="centro">
+        <div class="left">
+            <p>Servicio tecnico en computacion al instante!</p><br>
+            <a href="{% if user.is_authenticated %}{% url 'new_pedido' %}{% else %}{% url 'login' %}{% endif %}">Solicitar servicio</a>
+        </div>
+        <img src="{% static 'images/tecnico.png' %}	">
+    </div>
+        <br><br><br><br><br><br>
+    <div style="text-align: center">
+        <i class="fa fa-chevron-down" aria-hidden="true" style="font-size: 10em;color:#fff;position: relative"></i>
+    </div>
+
+{% include 'wans/manual.html' %}
 {% endblock %}
