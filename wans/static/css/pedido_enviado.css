@@ -1,0 +1,14 @@
+section{
+    background: #fff;
+    width: 50%;
+    margin: 0 auto;
+    padding: 25px;
+    font-family: Montserrat;
+    text-align: center;
+}
+
+section > a {
+    padding: 7px;
+    text-decoration: none;
+    background: #a9c7ff;
+}

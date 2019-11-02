@@ -19,7 +19,7 @@ class Pedido(models.Model):
     ubicacion = models.CharField(max_length=100)
     latitud = models.FloatField(default=0.0)
     longitud = models.FloatField(default=0.0)
-    dificultad = models.CharField(max_length=6)
+    dificultad = models.FloatField(default=1)
 
     def __str__(self):
         return self.ubicacion

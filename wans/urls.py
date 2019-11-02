@@ -12,5 +12,6 @@ urlpatterns = [
     path('remove/<int:user_id>/', views.sacar_de_grupo, name='sacar_de_grupo'),
     path('revisar/', views.revisar, name='revisar'),
     path('pedido/<int:pk>', views.pedido_detalle, name='pedido_detalle'),
-    path('eliminar/<int:pk>/', views.eliminar_pedido, name='eliminar_pedido')
+    path('eliminar/<int:pk>/', views.eliminar_pedido, name='eliminar_pedido'),
+    path('enviado/<int:pk>/', views.pedido_enviado, name='pedido_enviado')
 ]

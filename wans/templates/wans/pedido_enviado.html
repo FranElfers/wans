@@ -1,0 +1,15 @@
+{% extends 'wans/nav_base.html' %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/pedido_enviado.css' %}">
+    <section>
+        <h1>{{ cliente }}, tu pedido ha sido enviado</h1>
+        <p>
+Su pedido será revisado por algunos de nuestros técnicos y uno de ellos lo tomará y se dirigirá
+a la ubicación especificada
+        </p>
+        <br><br>
+        <a href="{% url 'inicio' %}">Volver a inicio</a>
+    </section>
+{% endblock %}

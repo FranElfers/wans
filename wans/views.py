@@ -19,6 +19,11 @@ def trabajos(request):
     return render(request, 'wans/lista.html', {'pedidos': pedidos})
 
 
+def pedido_enviado(request, pk):
+    pedido = Pedido.objects.get(pk=pk)
+    return render(request, 'wans/pedido_enviado.html', {'cliente': pedido.usuario})
+
+
 def new_pedido(request):
     cliente = Cliente.objects.get(usuario=request.user)
     cliente = cliente.nombre
@@ -28,7 +33,7 @@ def new_pedido(request):
             pedido = form.save(commit=False)
             pedido.usuario = request.user
             pedido.save()
-            return redirect('inicio')
+            return redirect('pedido_enviado', pk=pedido.id)
     else:
         form = PedidoForm()
     return render(request, 'wans/pedido.html', {'form': form, 'cliente': cliente})
