@@ -1,23 +1,24 @@
 {% extends 'wans/nav_base.html' %}
 {% load static %}
 
-
 {% block content %}
-    <meta charset="UTF-8">
-<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/pedido.css' %}">
 
-<!-- Load Leaflet from CDN -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
-integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-crossorigin=""/>
-<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
-integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
-crossorigin=""></script>
+    <!-- Geocoding -->
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 
-<!-- Load Esri Leaflet from CDN -->
-<script src="https://unpkg.com/esri-leaflet@2.3.1/dist/esri-leaflet.js"
-integrity="sha512-Np+ry4Dro5siJ1HZ0hTwn2jsmu/hMNrYw1EIK9EjsEVbDge4AaQhjeTGRg2ispHg7ZgDMVrSDjNrzH/kAO9Law=="
-crossorigin=""></script>
+    <!-- Load Leaflet from CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+    integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+    crossorigin=""></script>
+
+    <!-- Load Esri Leaflet from CDN -->
+    <script src="https://unpkg.com/esri-leaflet@2.3.1/dist/esri-leaflet.js"
+    integrity="sha512-Np+ry4Dro5siJ1HZ0hTwn2jsmu/hMNrYw1EIK9EjsEVbDge4AaQhjeTGRg2ispHg7ZgDMVrSDjNrzH/kAO9Law=="
+    crossorigin=""></script>
 
 <!-- Load Esri Leaflet Geocoder from CDN -->
 <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.3.1/dist/esri-leaflet-geocoder.css"
@@ -58,14 +59,13 @@ crossorigin=""></script>
 
         <div id="pag2" class="pregunta">
             <div class="mapinfo">
-                <div>Ubicación</div>
+                <h2>Ubicación</h2>
                 <p>Para buscar su ubicacion, ponga en el buscador a la izquierda su calle, el numero y el codigo postal.</p>
-                <input class="calle" type="text" placeholder="Calle">
-                <input class="numero" type="text" placeholder="Número">
-                <input class="localidad" type="text" placeholder="Localidad">
+                <br>
+                <p>Al escribir su direccion como especificado, aparecerán coincidencias y tendrá que seleccionar la opcion correcta.</p>
                 <br><br>
                 <b class="resultado"></b>
-                <a class="confirmar" onclick="buscarDireccion()">Buscar</a>
+                <p>Si esta es su dirección, continúe con el pedido</p>
             </div>
             <div id="map"></div>
         </div>
@@ -76,11 +76,12 @@ crossorigin=""></script>
             <span class="dificultad hide"></span>
             <form method="POST">
                 {% csrf_token %}
-                <p>Ingrese una breve descripción</p>
-                <p>{{ form.presentacion }}</p>
-                <p class="hide">{{ form.ubicacion }}</p>
+                <p>Breve descripcion: {{ form.presentacion }}</p>
                 <p class="hide">{{ form.latitud }}</p>
                 <p class="hide">{{ form.longitud }}</p>
+                <p class="hide">{{ form.ubicacion }}</p>
+                <p class="dificultad">{{ form.dificultad }}</p>
+
                 <button class="subir" type="submit">Subir</button>
             </form>
         </div>
@@ -141,19 +142,9 @@ crossorigin=""></script>
             var percent = (resultado - yMin) / (yMax - yMin);
             var dificultad = percent * (xMax - xMin) + xMin;
 
-            $('.dificultad').text('dificultad');
+            $('.dificultad').find('input').val(dificultad);
             console.log('activa ' +activa);
             return (resultado > 0);
-        };
-
-        var buscarDireccion = function(){
-            var calle = $('input.calle').val();
-            var numero = $('input.numero').val();
-            var localidad = $('input.localidad').val();
-            var buscador = $('.geocoder-control.leaflet-control');
-
-            buscador.addClass('geocoder-control-expanded');
-            buscador.find('input').val(calle + ' ' + numero + ' ' + localidad);
         };
 
         /* MAPA */
@@ -187,7 +178,6 @@ crossorigin=""></script>
                     return;
                 }
                 L.marker(result.latlng).addTo(map).bindPopup(result.address.Match_addr).openPopup();
-                //$('.resultado').text(result.address.Match_addr);
             });
         });
     </script>

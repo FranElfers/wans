@@ -26,7 +26,6 @@ def new_pedido(request):
         form = PedidoForm(request.POST)
         if form.is_valid():
             pedido = form.save(commit=False)
-            pedido.dificultad = '***'
             pedido.usuario = request.user
             pedido.save()
             return redirect('inicio')

@@ -46,6 +46,10 @@ section h1 {padding: 10px;}
 
 .pregunta p {margin: 0;}
 
+.mapinfo>p {
+	width: 70%;
+}
+
 .pregunta button {
 	padding: 15px;
 	background: white;
